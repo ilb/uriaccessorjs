@@ -1,0 +1,3 @@
+# uriaccessorjs
+
+uriaccessor for javascript
