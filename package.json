@@ -1,5 +1,5 @@
 {
-  "name": "uriaccessorjs",
+  "name": "@ilb/uriaccessorjs",
   "version": "1.0.0",
   "description": "uriaccessor for javascript",
   "main": "index.js",
