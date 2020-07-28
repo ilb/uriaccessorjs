@@ -9,7 +9,6 @@ pipeline {
             steps {
                 nodejs('node10') {
                     sh 'npm install'
-                    sh 'npm run build'
                     sh 'npm run test'
                     sh 'npm publish'
                }
