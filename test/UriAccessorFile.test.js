@@ -1,4 +1,4 @@
-import UriAccessorFile from "../uriaccessor/UriAccessorFile";
+import UriAccessorFile from "../src/UriAccessorFile";
 
 const fs = require('fs');
 const path = require('path');
