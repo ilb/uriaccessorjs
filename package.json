@@ -1,0 +1,21 @@
+{
+  "name": "uriaccessorjs",
+  "version": "1.0.0",
+  "description": "uriaccessor for javascript",
+  "main": "index.js",
+  "files": ["src"],
+  "dependencies": {
+    "babel-jest": "^26.1.0",
+    "jest": "^26.1.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://git.ilb.ru/ilb.ru/uriaccessorjs.git"
+  },
+  "author": "",
+  "license": "ISC"
+}
