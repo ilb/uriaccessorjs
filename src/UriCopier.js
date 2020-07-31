@@ -5,12 +5,12 @@ export default class UriCopier  {
 
     async copyUrl(fromUri,toUri) {
         //GET
-        const fromAccessor = this.uriAccessorFactory.getUriAccessor(fromUri); 
-        const content = await fromAccessor.getContent();
+        const fromAccessor = this.uriAccessorFactory.getUriAccessor(fromUri);
+        const content = await fromAccessor.getBinary();
         const contentType = fromAccessor.getContentType();
 
         //PUT
-        const toAccessor = this.uriAccessorFactory.getUriAccessor(toUri); 
+        const toAccessor = this.uriAccessorFactory.getUriAccessor(toUri);
         await toAccessor.setContent(content, contentType);
     }
 }

@@ -11,7 +11,7 @@ export function checkStatus(response) {
         error.response = response;
         throw error;
     }
-    return response;   
+    return response;
 }
 
 export default class UriAccessorHttp extends UriAccessor{
@@ -53,15 +53,18 @@ export default class UriAccessorHttp extends UriAccessor{
         this.checkBuild();
         return this.contentType;
     }
- 
+
     async setContent(content, contentType) {
         const options = {
-            method: 'PUT', 
+            method: 'PUT',
             headers: {
                 'Content-Type': contentType,
             },
             body: content
         };
+        if (Buffer.isBuffer(content)) {
+          options.headers['Content-length'] = content.length;
+        }
         if (this.currentUser) {
             options.headers['X-Remote-User']=this.currentUser;
         }
