@@ -1,19 +1,18 @@
-import UriAccessorFile from "../src/UriAccessorFile";
+import UriAccessorFile from '../src/UriAccessorFile';
+import path from 'path';
+import url from 'url';
+// import * as fs from 'fs';
 
-const fs = require('fs');
-const path = require('path');
-const fileUri = path.resolve('uriaccessor/')
-
-const uri = 'file://' + __dirname + '/testfile.txt';
-// console.log(uri);
+const uri = url.pathToFileURL(path.resolve('test/testfile.txt')).toString();
+// console.log({ uri });
 
 const uriAccessor = new UriAccessorFile(uri);
-const expectedStr = "test content";
+const expectedStr = 'test content';
 const expectedBuf = Buffer.from(expectedStr, 'utf8');
 
 test('fetches file', async () => {
-    expect(uriAccessor.getContent()).resolves.toStrictEqual(expectedStr);
-    expect(uriAccessor.getBinary()).resolves.toStrictEqual(expectedBuf);
-
+  const content = await uriAccessor.getContent();
+  expect(content).toStrictEqual(expectedStr);
+  const binary = await uriAccessor.getBinary();
+  expect(binary).toStrictEqual(expectedBuf);
 });
-
