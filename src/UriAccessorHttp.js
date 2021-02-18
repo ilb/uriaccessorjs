@@ -28,7 +28,7 @@ export default class UriAccessorHttp extends UriAccessor {
       }
       this.response = checkStatus(await fetch(this.uri, options));
       this.contentType = this.response.headers.get('content-type');
-      console.log('fetched ' + this.uri + ' content-type=' + this.contentType);
+      // console.log('fetched ' + this.uri + ' content-type=' + this.contentType);
     }
     return this.response;
   }

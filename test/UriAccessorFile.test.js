@@ -2,7 +2,7 @@ import UriAccessorFile from '../src/UriAccessorFile';
 import path from 'path';
 import url from 'url';
 
-const uri = url.pathToFileURL(path.resolve('test/testfile.txt')).toString();
+const uri = url.pathToFileURL(path.resolve('test/data/testfile.txt')).toString();
 // console.log({ uri });
 
 const uriAccessor = new UriAccessorFile(uri);
