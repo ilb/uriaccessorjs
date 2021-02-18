@@ -1,5 +1,5 @@
 import UriAccessor from './UriAccessor';
-import * as fs from 'fs';
+import fs from 'fs';
 
 export default class UriAccessorFile extends UriAccessor {
   getPath() {

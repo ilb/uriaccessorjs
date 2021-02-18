@@ -1,7 +1,6 @@
 import UriAccessorFile from '../src/UriAccessorFile';
 import path from 'path';
 import url from 'url';
-// import * as fs from 'fs';
 
 const uri = url.pathToFileURL(path.resolve('test/testfile.txt')).toString();
 // console.log({ uri });
