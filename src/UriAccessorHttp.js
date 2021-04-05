@@ -1,4 +1,4 @@
-import UriAccessor from './UriAccessor';
+import UriAccessor from './UriAccessor.js';
 import fetch from 'isomorphic-fetch';
 
 export function checkStatus(response) {

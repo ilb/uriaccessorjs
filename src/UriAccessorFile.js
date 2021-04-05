@@ -1,4 +1,4 @@
-import UriAccessor from './UriAccessor';
+import UriAccessor from './UriAccessor.js';
 import fs from 'fs';
 
 export default class UriAccessorFile extends UriAccessor {

@@ -1,5 +1,5 @@
-import UriAccessorFile from './UriAccessorFile';
-import UriAccessorHttp from './UriAccessorHttp';
+import UriAccessorFile from './UriAccessorFile.js';
+import UriAccessorHttp from './UriAccessorHttp.js';
 import url from 'url';
 
 export default class UriAccessorFactory {
