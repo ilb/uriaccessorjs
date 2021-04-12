@@ -1,5 +1,8 @@
 import UriAccessor from './UriAccessor.js';
-import fetch from 'isomorphic-fetch';
+import {default as fd} from 'fetch-with-proxy';
+//import fetch from 'isomorphic-fetch';
+const fetch = fd.default;
+//console.log({fetch});
 
 export function checkStatus(response) {
   //check status
