@@ -1,5 +1,6 @@
 import UriAccessor from './UriAccessor.js';
-import {default as fd} from 'fetch-with-proxy';
+import Timeout from 'await-timeout';
+import { default as fd } from 'fetch-with-proxy';
 //import fetch from 'isomorphic-fetch';
 const fetch = fd.default;
 //console.log({fetch});
@@ -29,7 +30,15 @@ export default class UriAccessorHttp extends UriAccessor {
         options.headers = {};
         options.headers['X-Remote-User'] = this.currentUser;
       }
-      this.response = checkStatus(await fetch(this.uri, options));
+      let response = checkStatus(await fetch(this.uri, options));
+      while (response.status === 202) {
+        const [timestr, refurl] = response.headers.map.refresh.split(';');
+        const timeout = timestr && Number(timestr) ? Number(timestr) : 1;
+        await Timeout.set(timeout * 1000);
+        response = checkStatus(await fetch(refurl, options));
+      }
+      this.response = response;
+
       this.contentType = this.response.headers.get('content-type');
       // console.log('fetched ' + this.uri + ' content-type=' + this.contentType);
     }

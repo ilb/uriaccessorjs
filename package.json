@@ -8,6 +8,7 @@
     "src"
   ],
   "dependencies": {
+    "await-timeout": "^1.1.1",
     "fetch-with-proxy": "^3.0.1",
     "isomorphic-fetch": "^3.0.0"
   },
