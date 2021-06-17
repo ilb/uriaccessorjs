@@ -32,7 +32,7 @@ export default class UriAccessorHttp extends UriAccessor {
       }
       let response = checkStatus(await fetch(this.uri, options));
       while (response.status === 202) {
-        const [timestr, refurl] = response.headers.map.refresh.split(';');
+        const [timestr, refurl] = response.headers.get('refresh').split(';');
         const timeout = timestr && Number(timestr) ? Number(timestr) : 1;
         await Timeout.set(timeout * 1000);
         response = checkStatus(await fetch(refurl, options));
