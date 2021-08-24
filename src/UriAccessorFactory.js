@@ -3,9 +3,14 @@ import UriAccessorHttp from './UriAccessorHttp.js';
 import url from 'url';
 
 export default class UriAccessorFactory {
-  constructor({ currentUser, uriAccessorFileEnabled }) {
+  /**
+   *
+   * @param {fetch} use to override fetch, e.g. from fetch-with-proxy
+   */
+  constructor({ currentUser, uriAccessorFileEnabled, fetch }) {
     this.currentUser = currentUser;
     this.uriAccessorFileEnabled = uriAccessorFileEnabled;
+    this.fetch = fetch;
   }
 
   getUriAccessor(uri) {
@@ -18,7 +23,7 @@ export default class UriAccessorFactory {
         return new UriAccessorFile(uri);
       case 'http:':
       case 'https:':
-        return new UriAccessorHttp(uri, this.currentUser);
+        return new UriAccessorHttp(uri, this.currentUser, fetch);
       default:
         throw new Error(parts.protocol + ' not implemented');
     }
