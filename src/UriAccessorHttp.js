@@ -31,7 +31,7 @@ export default class UriAccessorHttp extends UriAccessor {
         options.headers = {};
         options.headers['X-Remote-User'] = this.currentUser;
       }
-      let response = checkStatus(await fetch(this.uri, options));
+      let response = checkStatus(await this.fetch(this.uri, options));
       while (response.status === 202) {
         const [timestr, refurl] = response.headers.get('refresh').split(';');
         // resolve relative url
