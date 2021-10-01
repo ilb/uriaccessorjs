@@ -44,7 +44,7 @@ maybe('proxy test', () => {
     const uri = 'https://github.com/ilb/uriaccessorjs/raw/master/test/data/testfile.txt';
     const expectedStr = 'test content';
 
-    const uriAccessor = new UriAccessorHttp(uri, null, node_fetch_with_proxy);
+    const uriAccessor = new UriAccessorHttp(uri, { fetch: node_fetch_with_proxy });
     const content = await uriAccessor.getContent();
     expect(content).toStrictEqual(expectedStr);
   });
@@ -53,7 +53,7 @@ maybe('proxy test', () => {
     const uri = 'https://gitlab.com/slavb18/uriaccessorjs/-/raw/master/test/data/testfile.txt';
     const expectedStr = 'test content';
 
-    const uriAccessor = new UriAccessorHttp(uri, null, node_fetch_with_proxy);
+    const uriAccessor = new UriAccessorHttp(uri, { fetch: node_fetch_with_proxy });
     const content = await uriAccessor.getContent();
     expect(content).toStrictEqual(expectedStr);
   });

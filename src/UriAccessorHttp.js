@@ -19,10 +19,11 @@ export function checkStatus(response) {
 }
 
 export default class UriAccessorHttp extends UriAccessor {
-  constructor(uri, currentUser, _fetch) {
+  constructor(uri, options = {}) {
     super(uri);
-    this.currentUser = currentUser;
-    this.fetch = _fetch || fetch;
+    this.currentUser = options.currentUser || null;
+    this.fetch = options.fetch || fetch;
+    this.agent = options.agent || null;
   }
   async getResponse() {
     if (!this.response) {
