@@ -11,7 +11,7 @@ export default class UriAccessorFactory {
   constructor({ currentUser, uriAccessorFileEnabled, uriAgentFactory, fetch }) {
     this.currentUser = currentUser;
     this.uriAccessorFileEnabled = uriAccessorFileEnabled;
-    this.uriAgentFactory = uriAgentFactory || new UriAgentFactory();
+    this.uriAgentFactory = uriAgentFactory || new UriAgentFactory({});
     this.fetch = fetch;
   }
 
