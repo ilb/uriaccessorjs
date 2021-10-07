@@ -1,9 +1,6 @@
 import UriAccessor from './UriAccessor.js';
 import Timeout from 'await-timeout';
-// import { default as fd } from 'fetch-with-proxy';
-// const fetch = fd.default;
 import fetch from 'isomorphic-fetch';
-//console.log({fetch});
 
 export function checkStatus(response) {
   //check status
@@ -22,24 +19,31 @@ export default class UriAccessorHttp extends UriAccessor {
   constructor(uri, options = {}) {
     super(uri);
     this.currentUser = options.currentUser || null;
-    this.fetch = options.fetch || fetch;
     this.agent = options.agent || null;
+  }
+  configureOptions(options = {}) {
+    if (this.agent) {
+      options.agent = this.agent;
+    }
+    if (this.currentUser) {
+      options.headers = {};
+      options.headers['X-Remote-User'] = this.currentUser;
+    }
+    return options;
   }
   async getResponse() {
     if (!this.response) {
       const options = {};
-      if (this.currentUser) {
-        options.headers = {};
-        options.headers['X-Remote-User'] = this.currentUser;
-      }
-      let response = checkStatus(await this.fetch(this.uri, options));
+      this.configureOptions(options);
+
+      let response = checkStatus(await fetch(this.uri, options));
       while (response.status === 202) {
         const [timestr, refurl] = response.headers.get('refresh').split(';');
         // resolve relative url
         const refurlstr = new URL(refurl, this.uri).toString();
         const timeout = timestr && Number(timestr) ? Number(timestr) : 1;
         await Timeout.set(timeout * 1000);
-        response = checkStatus(await this.fetch(refurlstr, options));
+        response = checkStatus(await fetch(refurlstr, options));
       }
       this.response = response;
 
@@ -81,9 +85,7 @@ export default class UriAccessorHttp extends UriAccessor {
     if (Buffer.isBuffer(content)) {
       options.headers['Content-length'] = content.length;
     }
-    if (this.currentUser) {
-      options.headers['X-Remote-User'] = this.currentUser;
-    }
-    checkStatus(await this.fetch(this.uri, options));
+    this.configureOptions(options);
+    checkStatus(await fetch(this.uri, options));
   }
 }

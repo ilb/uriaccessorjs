@@ -1,30 +1,28 @@
 import UriAccessorFile from './UriAccessorFile.js';
 import UriAccessorHttp from './UriAccessorHttp.js';
 import UriAgentFactory from './UriAgentFactory.js';
-import url from 'url';
 
 export default class UriAccessorFactory {
   /**
    *
    * @param {fetch} use to override fetch, e.g. from fetch-with-proxy
    */
-  constructor({ currentUser, uriAccessorFileEnabled, uriAgentFactory, fetch }) {
+  constructor({ currentUser, uriAccessorFileEnabled, uriAgentFactory }) {
     this.currentUser = currentUser;
     this.uriAccessorFileEnabled = uriAccessorFileEnabled;
     this.uriAgentFactory = uriAgentFactory || new UriAgentFactory({});
-    this.fetch = fetch;
   }
 
   getUriAccessor(uri) {
-    const parts = url.parse(uri);
-    switch (parts.protocol) {
+    const url = new URL(uri);
+    switch (url.protocol) {
       case 'file:':
         return this.getUriAccessorFile(uri);
       case 'http:':
       case 'https:':
         return this.getUriAccessorHttp(uri);
       default:
-        throw new Error(parts.protocol + ' not implemented');
+        throw new Error(url.protocol + ' not implemented');
     }
   }
   getUriAccessorFile(uri) {
@@ -34,11 +32,9 @@ export default class UriAccessorFactory {
     return new UriAccessorFile(uri);
   }
   getUriAccessorHttp(uri) {
-    const agent = this.uriAgentFactory.getAgent(uri);
     return new UriAccessorHttp(uri, {
       currentUser: this.currentUser,
-      agent: agent,
-      fetch: this.fetch
+      agent: (_uri) => this.uriAgentFactory.getAgent(_uri)
     });
   }
 }

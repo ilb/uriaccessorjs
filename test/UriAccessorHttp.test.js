@@ -2,7 +2,7 @@ import UriAccessorHttp from '../src/UriAccessorHttp';
 import finalhandler from 'finalhandler';
 import http from 'http';
 import serveStatic from 'serve-static';
-import { default as node_fetch_with_proxy } from 'node-fetch-with-proxy';
+import ProxyAgent from 'proxy-agent';
 
 const serve = serveStatic('test/data', { index: ['index.html', 'index.htm'] });
 const server = http.createServer(function onRequest(req, res) {
@@ -43,8 +43,8 @@ maybe('proxy test', () => {
   test('node-fetch-with-proxy test', async () => {
     const uri = 'https://github.com/ilb/uriaccessorjs/raw/master/test/data/testfile.txt';
     const expectedStr = 'test content';
-
-    const uriAccessor = new UriAccessorHttp(uri, { fetch: node_fetch_with_proxy });
+    const agent = new ProxyAgent();
+    const uriAccessor = new UriAccessorHttp(uri, { agent });
     const content = await uriAccessor.getContent();
     expect(content).toStrictEqual(expectedStr);
   });
@@ -52,8 +52,8 @@ maybe('proxy test', () => {
   test('no-proxy test', async () => {
     const uri = 'https://gitlab.com/slavb18/uriaccessorjs/-/raw/master/test/data/testfile.txt';
     const expectedStr = 'test content';
-
-    const uriAccessor = new UriAccessorHttp(uri, { fetch: node_fetch_with_proxy });
+    const agent = new ProxyAgent();
+    const uriAccessor = new UriAccessorHttp(uri, { agent });
     const content = await uriAccessor.getContent();
     expect(content).toStrictEqual(expectedStr);
   });

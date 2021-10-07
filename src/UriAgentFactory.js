@@ -1,14 +1,14 @@
 /**
  * Match uri by String (startsWith) or RegExp (match) key
- * @param {String | RegExp} key
- * @param {String} uri
+ * @param {String | RegExp} key matcher
+ * @param {String | URL} uri address to test
  * @returns
  */
 function matchUri(key, uri) {
   if (key instanceof RegExp) {
-    return uri.match(key);
+    return uri.toString().match(key);
   } else {
-    return uri.startsWith(key);
+    return uri.toString().startsWith(key);
   }
 }
 
