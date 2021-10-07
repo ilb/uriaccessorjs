@@ -8,7 +8,7 @@
     "javascriptreact"
   ],
   "files.eol": "\n",
-  "eslint.autoFixOnSave": true,
+  "jest.jestCommandLine": "NODE_OPTIONS=--experimental-vm-modules npx jest",  "eslint.autoFixOnSave": true,
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": true
   }
