@@ -54,3 +54,15 @@ export function configureGlobalAgent(certfile, passphrase) {
 export function configureGlobalAgentConfig(certConfig) {
   Object.assign(https.globalAgent.options, certConfig);
 }
+
+export function configureProxy(proxyUrl) {
+  if ('string' == typeof proxyUrl) {
+    proxyUrl = new URL(proxyUrl);
+  }
+  const proxyConfig = {
+    protocol: proxyUrl.protocol,
+    host: proxyUrl.hostname || proxyUrl.host,
+    port: proxyUrl.port
+  };
+  return proxyConfig;
+}

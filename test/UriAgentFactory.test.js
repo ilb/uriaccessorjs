@@ -1,5 +1,5 @@
 import UriAgentFactory from '../src/UriAgentFactory';
-import { configureAgent } from '../src/httpagent';
+import { configureAgent } from '../src/agent';
 
 test('getAgent_RegExpKey', async () => {
   const uriAgentMap = new Map();
