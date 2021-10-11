@@ -78,3 +78,15 @@ ifproxysetcert('proxy-cert-test', () => {
     expect(content).toStrictEqual(expectedStr);
   });
 });
+
+const ifcert = process.env.certauthurl ? describe : describe.skip;
+ifcert('cert-test', () => {
+  test('certificate-test', async () => {
+    const uri = process.env.certauthurl;
+    const expectedStr = process.env.certauthexpected;
+    const agent = configureAgent(process.env.certfile, process.env.certpass);
+    const uriAccessor = new UriAccessorHttp(uri, { agent });
+    const content = await uriAccessor.getContent();
+    expect(content).toStrictEqual(expectedStr);
+  });
+});
