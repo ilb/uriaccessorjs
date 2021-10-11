@@ -9,4 +9,4 @@ export {
   configureAgentConfig,
   configureGlobalAgent,
   configureGlobalAgentConfig
-} from './httpagent.js';
+} from './agent.js';
