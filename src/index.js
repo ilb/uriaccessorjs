@@ -9,5 +9,6 @@ export {
   configureAgent,
   configureAgentConfig,
   configureGlobalAgent,
-  configureGlobalAgentConfig
+  configureGlobalAgentConfig,
+  configureProxy
 } from './agent.js';
