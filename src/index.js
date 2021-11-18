@@ -12,3 +12,5 @@ export {
   configureGlobalAgentConfig,
   configureProxy
 } from './agent.js';
+
+export { timeoutSignal } from './control.js';

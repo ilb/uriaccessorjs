@@ -5,7 +5,6 @@ import serveStatic from 'serve-static';
 import ProxyAgent from 'proxy-agent';
 import { Agent as BetterHttpsProxyAgent } from 'better-https-proxy-agent';
 import { configureAgent, configureCert, configureProxy } from '../src/agent';
-import { AbortController } from 'node-abort-controller';
 
 const serve = serveStatic('test/data', { index: ['index.html', 'index.htm'] });
 const server = http.createServer(function onRequest(req, res) {
@@ -96,13 +95,8 @@ const ifslow = process.env.slowurl ? describe : describe.skip;
 ifslow('slow-test', () => {
   test('slow-abort-test', async () => {
     const uri = process.env.slowurl;
-    const controller = new AbortController();
-    const signal = controller.signal;
-    setTimeout(() => {
-      controller.abort();
-    }, 1000);
 
-    const uriAccessor = new UriAccessorHttp(uri, { signal });
+    const uriAccessor = new UriAccessorHttp(uri, { timeout: 1000 });
     await expect(uriAccessor.getContent()).rejects.toThrow('The user aborted a request.');
   });
 });

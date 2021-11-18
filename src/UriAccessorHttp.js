@@ -1,6 +1,7 @@
 import UriAccessor from './UriAccessor.js';
 import Timeout from 'await-timeout';
 import fetch from 'isomorphic-fetch';
+import { timeoutSignal } from './control.js';
 
 export function checkStatus(response) {
   //check status
@@ -22,6 +23,11 @@ export default class UriAccessorHttp extends UriAccessor {
     if (this.options.currentUser) {
       this.options.headers = {};
       this.options.headers['X-Remote-User'] = this.options.currentUser;
+      delete this.options.currentUser;
+    }
+    if (this.options.timeout) {
+      this.options.signal = timeoutSignal(this.options.timeout);
+      delete this.options.timeout;
     }
   }
   async getResponse() {
