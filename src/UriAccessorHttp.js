@@ -18,32 +18,22 @@ export function checkStatus(response) {
 export default class UriAccessorHttp extends UriAccessor {
   constructor(uri, options = {}) {
     super(uri);
-    this.currentUser = options.currentUser || null;
-    this.agent = options.agent || null;
-  }
-  configureOptions(options = {}) {
-    if (this.agent) {
-      options.agent = this.agent;
+    this.options = Object.assign({}, options);
+    if (this.options.currentUser) {
+      this.options.headers = {};
+      this.options.headers['X-Remote-User'] = this.options.currentUser;
     }
-    if (this.currentUser) {
-      options.headers = {};
-      options.headers['X-Remote-User'] = this.currentUser;
-    }
-    return options;
   }
   async getResponse() {
     if (!this.response) {
-      const options = {};
-      this.configureOptions(options);
-
-      let response = checkStatus(await fetch(this.uri, options));
+      let response = checkStatus(await fetch(this.uri, this.options));
       while (response.status === 202) {
         const [timestr, refurl] = response.headers.get('refresh').split(';');
         // resolve relative url
         const refurlstr = new URL(refurl, this.uri).toString();
         const timeout = timestr && Number(timestr) ? Number(timestr) : 1;
         await Timeout.set(timeout * 1000);
-        response = checkStatus(await fetch(refurlstr, options));
+        response = checkStatus(await fetch(refurlstr, this.options));
       }
       this.response = response;
 
@@ -85,7 +75,6 @@ export default class UriAccessorHttp extends UriAccessor {
     if (Buffer.isBuffer(content)) {
       options.headers['Content-length'] = content.length;
     }
-    this.configureOptions(options);
-    checkStatus(await fetch(this.uri, options));
+    checkStatus(await fetch(this.uri, this.options));
   }
 }

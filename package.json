@@ -8,8 +8,8 @@
     "src"
   ],
   "dependencies": {
-    "isomorphic-fetch": "^3.0.0",
-    "await-timeout": "^1.1.1"
+    "await-timeout": "^1.1.1",
+    "isomorphic-fetch": "^3.0.0"
   },
   "devDependencies": {
     "better-https-proxy-agent": "^1.0.8",
@@ -20,6 +20,7 @@
     "eslint-plugin-prettier": "^3.3.0",
     "finalhandler": "^1.1.2",
     "jest": "^27.2.4",
+    "node-abort-controller": "^3.0.1",
     "prettier": "^2.2.1",
     "proxy-agent": "^5.0.0",
     "serve-static": "^1.14.1"
