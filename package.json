@@ -1,6 +1,6 @@
 {
   "name": "@ilb/uriaccessorjs",
-  "version": "1.0.19",
+  "version": "1.0.20",
   "description": "uriaccessor for javascript",
   "type": "module",
   "main": "src/index.js",
