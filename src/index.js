@@ -14,3 +14,5 @@ export {
 } from './agent.js';
 
 export { timeoutSignal } from './control.js';
+
+export { uriToString } from './uri.js';

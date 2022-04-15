@@ -1,21 +1,5 @@
-/**
- * transform various uri types to string
- * @param {*} uri
- */
-function uriToString(uri) {
-  // console.log(
-  //   uri,
-  //   `toString=${uri.toString()}, type='${typeof uri}', class='${uri.constructor?.name}'`
-  // );
-  switch (uri.constructor?.name) {
-    case 'URL':
-      return uri.toString();
-    case 'Url':
-      return uri.href;
-    default:
-      return uri.toString();
-  }
-}
+import { uriToString } from './uri.js';
+
 /**
  * Match uri by String (startsWith) or RegExp (match) key
  * @param {String | RegExp} key matcher
