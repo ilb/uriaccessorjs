@@ -1,3 +1,4 @@
+import UriAccessorFactory from '../src/UriAccessorFactory';
 import UriAccessorHttp from '../src/UriAccessorHttp';
 import finalhandler from 'finalhandler';
 import http from 'http';
@@ -22,7 +23,9 @@ afterAll(async () => {
 test('getContent', async () => {
   const uri = 'http://localhost:3030/testfile.txt';
   const expectedStr = 'test content';
-  const uriAccessor = new UriAccessorHttp(uri);
+  // const uriAccessor = new UriAccessorHttp(uri);
+  const uaf = new UriAccessorFactory({ currentUser: 'test', uriAccessorFileEnabled: false });
+  const uriAccessor = uaf.getUriAccessor(uri);
   const content = await uriAccessor.getContent();
   expect(content).toStrictEqual(expectedStr);
 });

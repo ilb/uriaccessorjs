@@ -1,4 +1,22 @@
 /**
+ * transform various uri types to string
+ * @param {*} uri
+ */
+function uriToString(uri) {
+  // console.log(
+  //   uri,
+  //   `toString=${uri.toString()}, type='${typeof uri}', class='${uri.constructor?.name}'`
+  // );
+  switch (uri.constructor?.name) {
+    case 'URL':
+      return uri.toString();
+    case 'Url':
+      return uri.href;
+    default:
+      return uri.toString();
+  }
+}
+/**
  * Match uri by String (startsWith) or RegExp (match) key
  * @param {String | RegExp} key matcher
  * @param {String | URL} uri address to test
@@ -6,9 +24,9 @@
  */
 function matchUri(key, uri) {
   if (key instanceof RegExp) {
-    return uri.toString().match(key);
+    return uriToString(uri).match(key);
   } else {
-    return uri.toString().startsWith(key);
+    return uriToString(uri).startsWith(key);
   }
 }
 
