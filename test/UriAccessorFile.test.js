@@ -21,3 +21,10 @@ test('getBinary', async () => {
   const binary = await uriAccessor.getBinary();
   expect(binary).toStrictEqual(expectedBuf);
 });
+
+test('getContentQuery', async () => {
+  const uriAccessor = new UriAccessorFile(uri + '?someparam=value');
+
+  const content = await uriAccessor.getContent();
+  expect(content).toStrictEqual(expectedStr);
+});

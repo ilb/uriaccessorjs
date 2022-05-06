@@ -3,7 +3,7 @@ import fs from 'fs';
 
 export default class UriAccessorFile extends UriAccessor {
   getPath() {
-    return this.uri.substring(7);
+    return this.uri.substring(7).split('?')[0];
   }
   getBuffer() {
     return fs.readFileSync(this.getPath());
