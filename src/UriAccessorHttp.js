@@ -2,6 +2,9 @@ import UriAccessor from './UriAccessor.js';
 import Timeout from 'await-timeout';
 import fetch from 'isomorphic-fetch';
 import { timeoutSignal } from './control.js';
+import createDebug from 'debug';
+
+const debug = createDebug('uriaccessorjs');
 
 export function checkStatus(response) {
   //check status
@@ -20,6 +23,7 @@ export async function fetchResponse(response, options) {
   checkStatus(response);
   while (response.status === 202) {
     const [timestr, refurl] = response.headers.get('refresh').split(';');
+    debug('fetchResponse: status = %o, time = %o, refurl = %o', response.status, timestr, refurl);
     // resolve relative url
     const refurlstr = new URL(refurl, this.uri).toString();
     const timeout = timestr && Number(timestr) ? Number(timestr) : 1;
@@ -46,6 +50,7 @@ export default class UriAccessorHttp extends UriAccessor {
   }
   async getResponse() {
     if (!this.response) {
+      debug('getResponse: uri = %o', this.uri);
       let response = await fetch(this.uri, this.options);
       this.response = await fetchResponse(response, this.options);
       this.contentType = this.response.headers.get('content-type');
