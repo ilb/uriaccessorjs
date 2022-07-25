@@ -6,6 +6,11 @@ import createDebug from 'debug';
 
 const debug = createDebug('uriaccessorjs');
 
+export function mergeOptions(options1 = {}, options2 = {}) {
+  const options = { ...options1, ...options2 };
+  options.headers = { ...options1.headers, ...options2.headers };
+  return options;
+}
 export function checkStatus(response) {
   //check status
   if (!response.ok) {
@@ -19,7 +24,7 @@ export function checkStatus(response) {
   return response;
 }
 
-export async function fetchResponse(response, options) {
+export async function fetchResponse(response, options = {}) {
   checkStatus(response);
   while (response.status === 202) {
     const [timestr, refurl] = response.headers.get('refresh').split(';');
@@ -50,24 +55,25 @@ export default class UriAccessorHttp extends UriAccessor {
       delete this.options.timeout;
     }
   }
-  async getResponse() {
+  async getResponse(options = {}) {
     if (!this.response) {
       debug('getResponse: uri = %o', this.uri);
-      let response = await fetch(this.uri, this.options);
-      this.response = await fetchResponse(response, this.options);
+      const reqoptions = mergeOptions(this.options, options);
+      let response = await fetch(this.uri, reqoptions);
+      this.response = await fetchResponse(response, reqoptions);
       this.contentType = this.response.headers.get('content-type');
       // console.log('fetched ' + this.uri + ' content-type=' + this.contentType);
     }
     return this.response;
   }
 
-  async getContent() {
-    const response = await this.getResponse();
+  async getContent(options = {}) {
+    const response = await this.getResponse(options);
     const result = await response.text();
     return result;
   }
-  async getBinary() {
-    const response = await this.getResponse();
+  async getBinary(options = {}) {
+    const response = await this.getResponse(options);
     const result = await response.buffer();
     return result;
   }

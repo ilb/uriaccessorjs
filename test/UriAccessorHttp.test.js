@@ -6,9 +6,20 @@ import serveStatic from 'serve-static';
 import ProxyAgent from 'proxy-agent';
 import { Agent as BetterHttpsProxyAgent } from 'better-https-proxy-agent';
 import { configureAgent, configureCert, configureProxy } from '../src/agent';
+import Timeout from 'await-timeout';
 
 const serve = serveStatic('test/data', { index: ['index.html', 'index.htm'] });
-const server = http.createServer(function onRequest(req, res) {
+const server = http.createServer(async function onRequest(req, res) {
+  if (req.url == '/testcontentype') {
+    res.write(req.headers['content-type'] || '!!undefined!!');
+    res.end();
+  }
+  if (req.url == '/slowurl') {
+    await Timeout.set(3000);
+    res.write('OK');
+    res.end();
+  }
+
   serve(req, res, finalhandler(req, res));
 });
 
@@ -27,6 +38,16 @@ test('getContent', async () => {
   const uaf = new UriAccessorFactory({ currentUser: 'test', uriAccessorFileEnabled: false });
   const uriAccessor = uaf.getUriAccessor(uri);
   const content = await uriAccessor.getContent();
+  expect(content).toStrictEqual(expectedStr);
+});
+
+test('getContentType', async () => {
+  const uri = 'http://localhost:3030/testcontentype';
+  const expectedStr = 'application/json';
+  // const uriAccessor = new UriAccessorHttp(uri);
+  const uaf = new UriAccessorFactory({ currentUser: 'test', uriAccessorFileEnabled: false });
+  const uriAccessor = uaf.getUriAccessor(uri);
+  const content = await uriAccessor.getContent({ headers: { 'content-type': 'application/json' } });
   expect(content).toStrictEqual(expectedStr);
 });
 
@@ -94,12 +115,12 @@ ifcert('cert-test', () => {
   });
 });
 
-const ifslow = process.env.slowurl ? describe : describe.skip;
-ifslow('slow-test', () => {
-  test('slow-abort-test', async () => {
-    const uri = process.env.slowurl;
+// const ifslow = process.env.slowurl ? describe : describe.skip;
+// ifslow('slow-test', () => {
+test('slow-abort-test', async () => {
+  const uri = 'http://localhost:3030/slowurl';
 
-    const uriAccessor = new UriAccessorHttp(uri, { timeout: 1000 });
-    await expect(uriAccessor.getContent()).rejects.toThrow('The user aborted a request.');
-  });
+  const uriAccessor = new UriAccessorHttp(uri, { timeout: 1000 });
+  await expect(uriAccessor.getContent()).rejects.toThrow('The user aborted a request.');
 });
+// });
