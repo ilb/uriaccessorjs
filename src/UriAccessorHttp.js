@@ -39,7 +39,9 @@ export default class UriAccessorHttp extends UriAccessor {
     super(uri);
     this.options = Object.assign({}, options);
     if (this.options.currentUser) {
-      this.options.headers = {};
+      if (!this.options.headers) {
+        this.options.headers = {};
+      }
       this.options.headers['X-Remote-User'] = this.options.currentUser;
       delete this.options.currentUser;
     }
