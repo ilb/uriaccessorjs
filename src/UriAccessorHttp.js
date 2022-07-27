@@ -24,13 +24,13 @@ export function checkStatus(response) {
   return response;
 }
 
-export async function fetchResponse(response, options = {}) {
+export async function fetchResponse(uri, response, options = {}) {
   checkStatus(response);
   while (response.status === 202) {
     const [timestr, refurl] = response.headers.get('refresh').split(';');
     debug('fetchResponse: status = %o, time = %o, refurl = %o', response.status, timestr, refurl);
     // resolve relative url
-    const refurlstr = new URL(refurl, this.uri).toString();
+    const refurlstr = new URL(refurl, uri).toString();
     const timeout = timestr && Number(timestr) ? Number(timestr) : 1;
     await Timeout.set(timeout * 1000);
     response = await fetch(refurlstr, options);
@@ -60,7 +60,7 @@ export default class UriAccessorHttp extends UriAccessor {
       debug('getResponse: uri = %o', this.uri);
       const reqoptions = mergeOptions(this.options, options);
       let response = await fetch(this.uri, reqoptions);
-      this.response = await fetchResponse(response, reqoptions);
+      this.response = await fetchResponse(this.uri, response, reqoptions);
       this.contentType = this.response.headers.get('content-type');
       // console.log('fetched ' + this.uri + ' content-type=' + this.contentType);
     }
