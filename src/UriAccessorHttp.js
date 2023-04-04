@@ -1,7 +1,7 @@
 import UriAccessor from './UriAccessor.js';
 import Timeout from 'await-timeout';
 import fetch from 'isomorphic-fetch';
-import { timeoutSignal } from './control.js';
+// import { timeoutSignal } from './control.js';
 import createDebug from 'debug';
 
 const debug = createDebug('uriaccessorjs');
@@ -52,10 +52,10 @@ export default class UriAccessorHttp extends UriAccessor {
     }
     // FIX client bundles. use instead:
     /// signal: timeoutSignal(1000)
-    if (this.options.timeout) {
-      this.options.signal = timeoutSignal(this.options.timeout);
-      delete this.options.timeout;
-    }
+    // if (this.options.timeout) {
+    //   this.options.signal = timeoutSignal(this.options.timeout);
+    //   delete this.options.timeout;
+    // }
   }
   async getResponse(options = {}) {
     if (!this.response) {
