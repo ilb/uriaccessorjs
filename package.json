@@ -14,6 +14,7 @@
   },
   "devDependencies": {
     "better-https-proxy-agent": "^1.0.8",
+    "debug": "^4.3.4",
     "dotenv": "^10.0.0",
     "eslint": "^8.4.1",
     "eslint-config-prettier": "^8.3.0",

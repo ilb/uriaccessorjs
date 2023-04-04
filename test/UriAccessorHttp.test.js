@@ -7,6 +7,7 @@ import ProxyAgent from 'proxy-agent';
 import { Agent as BetterHttpsProxyAgent } from 'better-https-proxy-agent';
 import { configureAgent, configureCert, configureProxy } from '../src/agent';
 import Timeout from 'await-timeout';
+import { timeoutSignal } from '../src/control.js';
 
 const serve = serveStatic('test/data', { index: ['index.html', 'index.htm'] });
 const server = http.createServer(async function onRequest(req, res) {
@@ -120,7 +121,7 @@ ifcert('cert-test', () => {
 test('slow-abort-test', async () => {
   const uri = 'http://localhost:3030/slowurl';
 
-  const uriAccessor = new UriAccessorHttp(uri, { timeout: 1000 });
+  const uriAccessor = new UriAccessorHttp(uri, { signal: timeoutSignal(1000) });
   await expect(uriAccessor.getContent()).rejects.toThrow('The user aborted a request.');
 });
 // });

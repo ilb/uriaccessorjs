@@ -1,7 +1,7 @@
 import UriAccessor from './UriAccessor.js';
 import Timeout from 'await-timeout';
 import fetch from 'isomorphic-fetch';
-import { timeoutSignal } from './control.js';
+// import { timeoutSignal } from './control.js';
 import createDebug from 'debug';
 
 const debug = createDebug('uriaccessorjs');
@@ -50,10 +50,12 @@ export default class UriAccessorHttp extends UriAccessor {
       this.options.headers['X-Remote-User'] = this.options.currentUser;
       delete this.options.currentUser;
     }
-    if (this.options.timeout) {
-      this.options.signal = timeoutSignal(this.options.timeout);
-      delete this.options.timeout;
-    }
+    // FIX client bundles. use instead:
+    /// signal: timeoutSignal(1000)
+    // if (this.options.timeout) {
+    //   this.options.signal = timeoutSignal(this.options.timeout);
+    //   delete this.options.timeout;
+    // }
   }
   async getResponse(options = {}) {
     if (!this.response) {
@@ -97,7 +99,9 @@ export default class UriAccessorHttp extends UriAccessor {
       },
       body: content
     };
-    if (Buffer.isBuffer(content)) {
+    // FIX client bundles
+    // if (Buffer.isBuffer(content)) {
+    if (content.length) {
       options.headers['Content-length'] = content.length;
     }
     checkStatus(await fetch(this.uri, options));
