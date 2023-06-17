@@ -1,6 +1,6 @@
 {
   "name": "@ilb/uriaccessorjs",
-  "version": "1.0.29",
+  "version": "1.0.30",
   "description": "uriaccessor for javascript",
   "type": "module",
   "main": "src/index.js",
@@ -9,7 +9,7 @@
   ],
   "dependencies": {
     "await-timeout": "^1.1.1",
-    "isomorphic-fetch": "^3.0.0",
+    "cross-fetch": "^3.1.6",
     "node-abort-controller": "^3.0.1"
   },
   "devDependencies": {
