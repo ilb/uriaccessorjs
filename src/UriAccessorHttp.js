@@ -1,6 +1,6 @@
 import UriAccessor from './UriAccessor.js';
 import Timeout from 'await-timeout';
-import fetch from 'isomorphic-fetch';
+import fetch from 'cross-fetch';
 // import { timeoutSignal } from './control.js';
 import createDebug from 'debug';
 
