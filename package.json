@@ -1,6 +1,6 @@
 {
   "name": "@ilb/uriaccessorjs",
-  "version": "1.0.31",
+  "version": "1.0.32",
   "description": "uriaccessor for javascript",
   "type": "module",
   "main": "src/index.js",
@@ -13,22 +13,27 @@
     "node-abort-controller": "^3.0.1"
   },
   "devDependencies": {
+    "@ilb/eslint-config": "^1.0.2",
     "better-https-proxy-agent": "^1.0.8",
     "debug": "^4.3.4",
     "dotenv": "^10.0.0",
-    "eslint": "^8.4.1",
+    "eslint": "^8.57.0",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-jest": "^25.3.0",
     "eslint-plugin-prettier": "^4.0.0",
     "finalhandler": "^1.1.2",
+    "install": "^0.13.0",
     "jest": "^27.4.5",
+    "npm": "^10.8.0",
     "prettier": "^2.5.1",
     "proxy-agent": "^5.0.0",
     "serve-static": "^1.14.2"
   },
   "scripts": {
     "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js",
-    "test:watch": "node --experimental-vm-modules node_modules/jest/bin/jest.js --watch"
+    "test:watch": "node --experimental-vm-modules node_modules/jest/bin/jest.js --watch",
+    "lint": "ESLINT_USE_FLAT_CONFIG=true eslint -c eslint.config.mjs .",
+    "lint:fix": "ESLINT_USE_FLAT_CONFIG=true eslint -c eslint.config.mjs --fix ."
   },
   "repository": {
     "type": "git",

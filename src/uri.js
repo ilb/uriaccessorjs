@@ -1,20 +1,17 @@
-import Url from 'url';
+import Url from "url";
 
 /**
  * transform various uri types to string
- * @param {*} uri
+ * @param {any} uri
+ * @returns {string}
  */
 export function uriToString(uri) {
-  // console.log(
-  //   uri,
-  //   `toString=${uri.toString()}, type='${typeof uri}', class='${uri.constructor?.name}'`
-  // );
   switch (uri.constructor?.name) {
-    case 'URL':
+    case "URL":
       return uri.toString();
-    case 'Url':
+    case "Url":
       return Url.format(uri);
-    case 'String':
+    case "String":
       return uri;
     default:
       return uri.toString();
