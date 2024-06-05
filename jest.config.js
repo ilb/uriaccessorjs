@@ -2,7 +2,7 @@
 // https://jestjs.io/docs/en/configuration.html
 
 export default {
-  testEnvironment: 'jest-environment-node',
+  testEnvironment: "jest-environment-node",
   transform: {},
-  setupFiles: ['dotenv/config']
+  setupFiles: ["dotenv/config"],
 };
