@@ -30,7 +30,7 @@
     "serve-static": "^1.14.2"
   },
   "scripts": {
-    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js",
+    "test": "node --experimental-vm-modules --use-openssl-ca node_modules/jest/bin/jest.js",
     "test:watch": "node --experimental-vm-modules node_modules/jest/bin/jest.js --watch",
     "lint": "ESLINT_USE_FLAT_CONFIG=true eslint -c eslint.config.mjs .",
     "lint:fix": "ESLINT_USE_FLAT_CONFIG=true eslint -c eslint.config.mjs --fix ."

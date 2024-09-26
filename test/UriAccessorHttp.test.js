@@ -125,3 +125,19 @@ test('slow-abort-test', async () => {
   await expect(uriAccessor.getContent()).rejects.toThrow('The user aborted a request.');
 });
 // });
+
+//cmd: node --experimental-vm-modules --use-openssl-ca node_modules/jest/bin/jest.js -t system-cert-test
+const ifsystemsetcert =
+  process.env.https_proxy && process.env.systemcerturl ? describe : describe.skip;
+ifsystemsetcert('system-cert-test', () => {
+  test('system-cert-test-test', async () => {
+    const uri = process.env.systemcerturl;
+    // const agent0 = configureAgent(process.env.certfile, process.env.certpass);
+    // console.log(agent0);
+    const certConfig = configureCert(process.env.certfile, process.env.certpass);
+    const proxyOptions = configureProxy(process.env.https_proxy);
+    const agent = new BetterHttpsProxyAgent(certConfig, proxyOptions);
+    const uriAccessor = new UriAccessorHttp(uri, { agent });
+    await expect(uriAccessor.getContent()).rejects.toThrow('Forbidden');
+  });
+});
