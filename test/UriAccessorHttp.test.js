@@ -136,7 +136,7 @@ ifsystemsetcert('system-cert-test', () => {
     // console.log(agent0);
     const certConfig = configureCert(process.env.certfile, process.env.certpass);
     const proxyOptions = configureProxy(process.env.https_proxy);
-    const agent = new BetterHttpsProxyAgent(certConfig, proxyOptions);
+    const agent = new BetterHttpsProxyAgent({}, { ...certConfig, ...proxyOptions });
     const uriAccessor = new UriAccessorHttp(uri, { agent });
     await expect(uriAccessor.getContent()).rejects.toThrow('Forbidden');
   });
